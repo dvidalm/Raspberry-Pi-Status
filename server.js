@@ -2,19 +2,25 @@
  * Autor: Mario Pérez Esteso <mario@geekytheory.com>
  * Web: geekytheory.com
  */
-var port = 8000;
-var app = require('http').createServer(handler).listen(port, "0.0.0.0"),
-  io = require('socket.io').listen(app),
+var port = process.env.PORT || 8000;
+var express = require('express')
+    ,http = require('http');
+
+var app = express();
+
+
+//Escuchamos en el puerto $port
+var io = require('socket.io').listen(http.createServer(app).listen(port, "0.0.0.0")),
   fs = require('fs'),
   sys = require('util'),
   exec = require('child_process').exec,
   child, child1;
   var connectCounter = 0;
-//Escuchamos en el puerto $port
-app.listen(port);
+
+app.use(express.static('public'));
 //Si todo va bien al abrir el navegador, cargaremos el archivo index.html
-function handler(req, res) {
-	fs.readFile(__dirname+'/index.html', function(err, data) {
+app.get("/",function(req,res){
+    fs.readFile(__dirname+'/index.html', function(err, data) {
 		if (err) {
       //Si hay error, mandaremos un mensaje de error 500
 			console.log(err);
@@ -24,7 +30,7 @@ function handler(req, res) {
 		res.writeHead(200);
 		res.end(data);
 	});
-}
+});
 
 //Cuando abramos el navegador estableceremos una conexión con socket.io.
 //Cada X segundos mandaremos a la gráfica un nuevo valor.
