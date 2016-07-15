@@ -29,7 +29,7 @@
 <body>
 <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="container">
-          
+
   <div class="row marketing">
       <div class="col-lg-4">
         <div class="panel panel-primary">
@@ -37,6 +37,7 @@
           <div class="panel-body"><p  id="p_hostname">Here you can see the general info of the Raspberry Pi</p>
             <p  id="p_kernel"></p>
             <p  id="p_uptime"></p>
+            <p  id="p_streamStatus"></p>
             <div>
                 <b>Top list:</b>
                 <ol id="toplist">
@@ -63,14 +64,14 @@
 
     <!-- Comienza el Javascript -->
     <script>
-    // Creo un WebSocket. ¡Poned la IP de vuestra Raspberry Pi! 
+    // Creo un WebSocket. ¡Poned la IP de vuestra Raspberry Pi!
     var socket = io.connect('http://'+ location.host);
     // console.log(location.host)
     // Creo un nuevo objeto 'Chart'
     var chart, chartCPU, chartMem, memTotal;
     chart = new Highcharts.StockChart({
         chart: {
-            renderTo: 'chart', 
+            renderTo: 'chart',
             defaultSeriesType: 'spline',
             events: {
                 load: function() {
@@ -112,7 +113,7 @@
 
       chartCPU = new Highcharts.StockChart({
         chart: {
-            renderTo: 'cpu_usage', 
+            renderTo: 'cpu_usage',
             defaultSeriesType: 'spline',
             events: {
                 load: function() {
@@ -193,7 +194,7 @@
                         enabled: true
                     }
                 }
-            },            
+            },
             credits: {
                 enabled: false
             },
@@ -207,10 +208,13 @@
         });
         socket.on('kernel', function (ker) {
           document.getElementById("p_kernel").innerHTML="<b>Kernel:</b> "+ker;
-        }); 
+        });
         socket.on('uptime', function (uptime) {
           document.getElementById("p_uptime").innerHTML="<b>Up time:</b> "+ uptime;
-        }); 
+        });
+        socket.on('streamServer',function(status){
+            document.getElementById("p_streamStatus").innerHTML="<b>Stream Server status:</b> "+ uptime;
+        });
         socket.on('toplist', function (toplist) {
             var res = toplist.split("\n");
             var result = "";
@@ -225,6 +229,6 @@
           chartMem.setTitle({text:"Memory: "+mem+" KB"});
           memTotal = mem;
         });
-    </script>   
+    </script>
 </body>
 </html>
