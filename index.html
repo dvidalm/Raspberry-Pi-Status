@@ -213,7 +213,7 @@
           document.getElementById("p_uptime").innerHTML="<b>Up time:</b> "+ uptime;
         });
         socket.on('streamServer',function(status){
-            document.getElementById("p_streamStatus").innerHTML="<b>Stream Server status:</b> "+ uptime;
+            document.getElementById("p_streamStatus").innerHTML="<b>Stream Server status:</b> "+ status;
         });
         socket.on('toplist', function (toplist) {
             var res = toplist.split("\n");
