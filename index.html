@@ -46,7 +46,7 @@
       <div class="col-lg-4">
         <div class="panel panel-primary">
           <div class="panel-heading">General info</div>
-          <div class="panel-body"><p  id="p_hostname">Here you can see the general info of the Raspberry Pi</p>
+          <div class="panel-body"><p id="p_hostname">Here you can see the general info of the Raspberry Pi</p>
             <p  id="p_kernel"></p>
             <p  id="p_uptime"></p>
             <p  id="p_streamStatus"></p>
@@ -55,7 +55,7 @@
                 <ol id="toplist">
                 </ol>
             </div>
-            <button type="button" class="btn btn-primary" name="reset" id="reset">Reset</button>
+            <!-- <button type="button" class="btn btn-primary" name="reset" id="reset">Reset</button> -->
           </div>
         </div>
       </div>
@@ -226,7 +226,7 @@
           document.getElementById("p_uptime").innerHTML="<b>Up time:</b> "+ uptime;
         });
         socket.on('streamServer',function(status){
-            document.getElementById("p_streamStatus").innerHTML="<b>Stream Server status:</b> "+ status;
+            document.getElementById("p_streamStatus").innerHTML="<b>Stream Server status:</b> "+ status +" <button type='button' class='btn btn-primary' name='reset' id='reset'>Reset server</button>";
         });
         socket.on('toplist', function (toplist) {
             var res = toplist.split("\n");
@@ -244,7 +244,8 @@
         });
 
         $("#reset").click(function(){
-            console.log("lala");
+            $("#p_streamStatus").html("<b>Stream Server status:</b> Resetting");
+            socket.emit("resetStreamServer");
         });
     </script>
 </body>

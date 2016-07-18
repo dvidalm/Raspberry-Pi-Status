@@ -33,6 +33,15 @@ io.sockets.on('connection', function(socket) {
   connectCounter++;
   console.log("NUMBER OF CONNECTIONS++: "+connectCounter);
   socket.on('disconnect', function() { connectCounter--;  console.log("NUMBER OF CONNECTIONS--: "+connectCounter);});
+  socket.on('resetStreamServer',function(){
+      child = exec("/etc/init.d/stream-server restart", function (error, stdout, stderr) {
+  	    if (error !== null) {
+  	      console.log('exec error: ' + error);
+  	    } else {
+  	      socket.emit('streamServer', stdout);
+  	    }
+      });
+  });
 
   // Function for checking memory
     child = exec("egrep --color 'MemTotal' /proc/meminfo | egrep '[0-9.]{4,}' -o", function (error, stdout, stderr) {
