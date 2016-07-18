@@ -244,6 +244,7 @@
         });
 
         $("#reset").click(function(){
+            console.log("reset clicked");
             $("#p_streamStatus").html("<b>Stream Server status:</b> Resetting");
             socket.emit("resetStreamServer");
         });
