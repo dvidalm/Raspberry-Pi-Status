@@ -181,4 +181,14 @@ io.sockets.on('connection', function(socket) {
 	      socket.emit('toplist', stdout);
 	    }
 	  });}, 10000);
+
+
+ setInterval(function(){
+      child = exec("/etc/init.d/stream-server status", function (error, stdout, stderr) {
+  	    if (error !== null) {
+  	      console.log('exec error: ' + error);
+  	    } else {
+  	      socket.emit('streamServer', stdout);
+  	    }
+    });},10000);
 });
