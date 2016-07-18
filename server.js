@@ -34,7 +34,7 @@ io.sockets.on('connection', function(socket) {
   console.log("NUMBER OF CONNECTIONS++: "+connectCounter);
   socket.on('disconnect', function() { connectCounter--;  console.log("NUMBER OF CONNECTIONS--: "+connectCounter);});
   socket.on('resetStreamServer',function(){
-      child = exec("/etc/init.d/stream-server restart", function (error, stdout, stderr) {
+      child = exec("sudo /etc/init.d/stream-server restart", function (error, stdout, stderr) {
           console.log("reset!");
   	    if (error !== null) {
   	      console.log('exec error: ' + error);
