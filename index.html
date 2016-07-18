@@ -55,6 +55,7 @@
                 <ol id="toplist">
                 </ol>
             </div>
+            <button type="button" class="btn btn-primary" name="reset" id="reset">Reset</button>
           </div>
         </div>
       </div>
@@ -240,6 +241,10 @@
         socket.on('memoryTotal', function (mem) {
           chartMem.setTitle({text:"Memory: "+mem+" KB"});
           memTotal = mem;
+        });
+
+        $("#reset").click(function(){
+            console.log("lala");
         });
     </script>
 </body>

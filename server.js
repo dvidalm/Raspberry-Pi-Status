@@ -20,16 +20,7 @@ var io = require('socket.io').listen(http.createServer(app).listen(port, "0.0.0.
 app.use(express.static('public'));
 //Si todo va bien al abrir el navegador, cargaremos el archivo index.html
 app.get("/",function(req,res){
-    fs.readFile(__dirname+'/index.html', function(err, data) {
-		if (err) {
-      //Si hay error, mandaremos un mensaje de error 500
-			console.log(err);
-			res.writeHead(500);
-			return res.end('Error loading index.html');
-		}
-		res.writeHead(200);
-		res.end(data);
-	});
+    res.sendFile(__dirname+'/index.html');
 });
 
 //Cuando abramos el navegador estableceremos una conexión con socket.io.
